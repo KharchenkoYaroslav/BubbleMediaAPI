@@ -11,8 +11,8 @@
     "MetricsService:dev:docker": "nx serve MetricsService --configuration=development",
     "CommentService:dev:docker": "nx serve CommentService --configuration=development",
     "ContentFeedService:dev:docker": "nx serve ContentFeedService --configuration=development",
-    "start": "nx serve",
-    "build": "nx build"
+    "start": "docker-compose up -d",
+    "build": "docker-compose build"
   },
   "private": true,
   "dependencies": {

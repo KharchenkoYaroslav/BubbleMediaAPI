@@ -3,7 +3,7 @@ services:
     restart: always
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.base
     environment:
       - DEV_PLATFORM=DOCKER
     volumes:
