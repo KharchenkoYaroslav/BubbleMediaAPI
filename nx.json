@@ -10,7 +10,14 @@
     ],
     "sharedGlobals": []
   },
-  "nxCloudId": "6818496690e5437ad6a9c3ba",
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "@nx/workspace/tasks-runners/default",
+      "options": {
+        "cacheableOperations": ["build", "lint", "test", "e2e"]
+      }
+    }
+  },
   "plugins": [
     {
       "plugin": "@nx/webpack/plugin",
