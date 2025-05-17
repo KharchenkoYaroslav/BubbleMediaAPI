@@ -12,10 +12,9 @@ async function bootstrap() {
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     preflightContinue: false,
   });
-  const url = process.env.GATEWAY_URL || 'http://localhost:3000';
   await app.listen(process.env.PORT || 4000);
   Logger.log(
-    `🚀 Application is running on: ${url}/graphql`
+    `🚀 Application is running on port: ${process.env.PORT || 4000}`
   );
 }
 
