@@ -24,13 +24,13 @@ async function bootstrap() {
     options: {
       package: 'contentfeed',
       protoPath: join(__dirname, 'proto/content-feed.proto'),
-      url: `${process.env.CONTENT_FEED_GRPC_URL || '0.0.0.0:3007'}`,
+      url: `${process.env.CONTENT_FEED_SERVICE_URL || '0.0.0.0:3007'}`,
     },
   });
 
   await app.startAllMicroservices();
   Logger.log(
-    `🚀 Content feed service running (gRPC on ${process.env.CONTENT_FEED_GRPC_URL || '0.0.0.0:3007'})`
+    `🚀 Content feed service running (gRPC on ${process.env.CONTENT_FEED_SERVICE_URL || '0.0.0.0:3007'})`
   );
 
   app.get(AppService).initGrpc();

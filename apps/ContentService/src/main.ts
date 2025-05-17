@@ -24,7 +24,7 @@ async function bootstrap() {
     options: {
       package: 'content',
       protoPath: join(__dirname, 'proto/content.proto'),
-      url: `${process.env.CONTENT_GRPC_URL || '0.0.0.0:3004'}`,
+      url: `${process.env.CONTENT_SERVICE_URL || '0.0.0.0:3004'}`,
       maxReceiveMessageLength: 1024 * 1024 * 1024,
     },
   });
@@ -32,7 +32,7 @@ async function bootstrap() {
   await app.startAllMicroservices();
   Logger.log(
     `🚀 Content service running (gRPC on ${
-      process.env.CONTENT_GRPC_URL || '0.0.0.0:3004'
+      process.env.CONTENT_SERVICE_URL || '0.0.0.0:3004'
     })`
   );
 

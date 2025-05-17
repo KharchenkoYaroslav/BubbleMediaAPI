@@ -19,7 +19,7 @@ import { join } from 'path';
         options: {
           package: 'google',
           protoPath: join(__dirname, 'proto/google.proto'),
-          url: `${process.env.GOOGLE_GRPC_URL || '0.0.0.0:3002'}`,
+          url: `${process.env.GOOGLE_SERVICE_URL || '0.0.0.0:3002'}`,
         },
       },
     ]),
