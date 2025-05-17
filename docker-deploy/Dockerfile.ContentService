@@ -1,0 +1,45 @@
+# Використовуємо базовий образ Node.js
+FROM node:20-alpine AS builder
+
+# Встановлюємо робочу директорію
+WORKDIR /app
+
+# Копіюємо файли package.json та package-lock.json з кореня проекту
+COPY ../package*.json ./
+
+# Встановлюємо залежності
+RUN npm install
+
+# Копіюємо решту коду додатку з кореня проекту
+COPY ../. .
+
+# Збираємо додаток ContentService
+RUN npx nx build ContentService
+
+# Використовуємо легший образ для запуску
+FROM node:20-alpine
+
+# Встановлюємо робочу директорію
+WORKDIR /app
+
+# Копіюємо зібраний додаток з попереднього етапу
+COPY --from=builder /app/dist/apps/ContentService ./dist/apps/ContentService
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package*.json ./
+
+# Копіюємо файли proto
+COPY ../apps/ContentService/src/app/proto/content.proto apps/ContentService/src/app/proto/
+COPY ../apps/ContentService/src/app/proto/google.proto apps/ContentService/src/app/proto/
+COPY ../apps/ContentService/src/app/proto/metrics.proto apps/ContentService/src/app/proto/
+
+# Відкриваємо порт, який використовує сервіс
+EXPOSE 3004
+
+# Змінні середовища
+ENV PORT=3004
+# ENV GOOGLE_DRIVE_SERVICE_URL=google-drive-service:3002
+# ENV METRICS_SERVICE_URL=metrics-service:3005
+# ENV RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672
+
+# Команда для запуску додатку
+CMD [ "node", "dist/apps/ContentService/main.js" ]
