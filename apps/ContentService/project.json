@@ -1,0 +1,45 @@
+{
+  "name": "ContentService",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/ContentService/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "webpack-cli build",
+        "args": ["node-env=production"]
+      },
+      "configurations": {
+        "development": {
+          "args": ["node-env=development"],
+          "assets": [
+            {
+              "glob": "**/*.proto",
+              "input": "apps/ContentService/src/app/proto",
+              "output": "proto"
+            }
+          ]
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "dependsOn": ["build"],
+      "options": {
+        "buildTarget": "ContentService:build",
+        "runBuildTargetDependencies": false
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "ContentService:build:development"
+        },
+        "production": {
+          "buildTarget": "ContentService:build:production"
+        }
+      }
+    }
+  }
+}

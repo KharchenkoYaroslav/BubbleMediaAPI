@@ -1,0 +1,136 @@
+services:
+  gateway-service:
+    extends:
+      file: docker-compose.base.yml
+      service: nx-app-base
+    command: npm run Gateway:dev:docker
+    ports:
+      - "3000:3000"
+    depends_on:
+      - auth-service
+      - profile-service
+      - content-service
+      - metrics-service
+      - comment-service
+      - content-feed-service
+      - rabbitmq
+    environment:
+      - AUTH_SERVICE_URL=auth-service:3001
+      - GOOGLE_DRIVE_SERVICE_URL=google-drive-service:3002
+      - PROFILE_SERVICE_URL=profile-service:3003
+      - CONTENT_SERVICE_URL=content-service:3004
+      - METRICS_SERVICE_URL=metrics-service:3005
+      - COMMENT_SERVICE_URL=comment-service:3006
+      - CONTENT_FEED_SERVICE_URL=content-feed-service:3007
+      - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672
+
+  auth-service:
+    extends:
+      file: docker-compose.base.yml
+      service: nx-app-base
+    command: npm run AuthService:dev:docker
+    depends_on:
+      - rabbitmq
+    environment:
+      - PORT=3001
+      - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672
+
+  google-drive-service:
+    extends:
+      file: docker-compose.base.yml
+      service: nx-app-base
+    command: npm run GoogleDriveService:dev:docker
+    depends_on:
+      - rabbitmq
+    environment:
+      - PORT=3002
+      - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672
+
+  profile-service:
+    extends:
+      file: docker-compose.base.yml
+      service: nx-app-base
+    command: npm run ProfileService:dev:docker
+    depends_on:
+      - google-drive-service
+      - rabbitmq
+    environment:
+      - PORT=3003
+      - GOOGLE_DRIVE_SERVICE_URL=google-drive-service:3002
+      - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672
+
+  content-service:
+    extends:
+      file: docker-compose.base.yml
+      service: nx-app-base
+    command: npm run ContentService:dev:docker
+    depends_on:
+      - google-drive-service
+      - metrics-service
+      - rabbitmq
+    environment:
+      - PORT=3004
+      - GOOGLE_DRIVE_SERVICE_URL=google-drive-service:3002
+      - METRICS_SERVICE_URL=metrics-service:3005
+      - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672
+
+  metrics-service:
+    extends:
+      file: docker-compose.base.yml
+      service: nx-app-base
+    command: npm run MetricsService:dev:docker
+    depends_on:
+      - rabbitmq
+    environment:
+      - PORT=3005
+      - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672
+
+  comment-service:
+    extends:
+      file: docker-compose.base.yml
+      service: nx-app-base
+    command: npm run CommentService:dev:docker
+    depends_on:
+      - rabbitmq
+    environment:
+      - PORT=3006
+      - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672
+
+  content-feed-service:
+    extends:
+      file: docker-compose.base.yml
+      service: nx-app-base
+    command: npm run ContentFeedService:dev:docker
+    depends_on:
+      - auth-service
+      - profile-service
+      - metrics-service
+    environment:
+      - PORT=3007
+      - AUTH_SERVICE_URL=auth-service:3001
+      - PROFILE_SERVICE_URL=profile-service:3003
+      - METRICS_SERVICE_URL=metrics-service:3005
+      - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672
+
+  rabbitmq:
+    build:
+      context: ./
+      dockerfile: Dockerfile.rabbitmq
+    ports:
+      - "5672"
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq/mnesia
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "check_running"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+
+
+
+volumes:
+  rabbitmq_data:
+  mono-node-modules: null

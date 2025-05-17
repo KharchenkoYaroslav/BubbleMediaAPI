@@ -1,0 +1,39 @@
+import { Logger } from '@nestjs/common';
+import { NestFactory } from '@nestjs/core';
+import { Transport } from '@nestjs/microservices';
+import { join } from 'path';
+import { AppModule } from './app/app.module';
+import { AppService } from './app/app.service';
+
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
+
+  app.connectMicroservice({
+    transport: Transport.RMQ,
+    options: {
+      urls: [process.env.RABBITMQ_URL || 'amqp://localhost:5672'],
+      queue: 'metrics_queue',
+      queueOptions: {
+        durable: false,
+      },
+    },
+  });
+
+  app.connectMicroservice({
+    transport: Transport.GRPC,
+    options: {
+      package: 'metrics',
+      protoPath: join(__dirname, 'proto/metrics.proto'),
+      url: `${process.env.METRICS_GRPC_URL || '0.0.0.0:3005'}`,
+    },
+  });
+
+  await app.startAllMicroservices();
+  Logger.log(
+    `🚀 Metrics service running (gRPC on ${process.env.METRICS_GRPC_URL || '0.0.0.0:3005'})`
+  );
+
+  app.get(AppService).cleanupOldDays();
+}
+
+bootstrap();

@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package metrics;
+
+service MetricsService {
+  rpc GetLikedPublications (UserRequest) returns (GetLikedPublicationsResponse);
+  rpc GetRecentTopPosts (TopPostsRequest) returns (TopPostsResponse);
+}
+
+message TopPostsRequest {}
+
+message TopPostsResponse {
+  repeated TopPost posts = 1;
+}
+
+message TopPost {
+  string publicationId = 1;
+  int32 score = 2;
+}
+
+message UserRequest{
+  string userId = 1;
+}
+
+message GetLikedPublicationsResponse{
+  repeated string publicationId = 1;
+}
+

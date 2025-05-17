@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+package contentfeed;
+
+service ContentFeedService {
+  rpc GetRecentTopPosts (GetRecentTopPostsRequest) returns (PublicationsResponse);
+  rpc GetLikedPublications (GetLikedPublicationsRequest) returns (PublicationsResponse);
+  rpc GetRandomPublications (GetRandomPublicationsRequest) returns (PublicationsResponse);
+  rpc GetSubscriptionsPublications (GetSubscriptionsPublicationsRequest) returns (PublicationsResponse);
+}
+
+message PostsRequest {
+  int32 start = 1;
+  int32 end = 2;
+}
+
+message Publication {
+  string publicationId = 1;
+  string userId = 2;
+  string login = 3;
+  string avatarUrl = 4;
+  string publicationName = 5;
+  string coverUrl = 6;
+  string type = 7;
+}
+
+message GetRecentTopPostsRequest {
+  PostsRequest postsRequest = 1;
+  repeated string tegs = 2;
+  string authorId = 3;
+}
+
+message GetLikedPublicationsRequest {
+  PostsRequest postsRequest = 1;
+  string userId = 2;
+  repeated string tegs = 3;
+  string authorId = 4;
+}
+
+message PublicationsResponse {
+  repeated Publication publications = 1;
+}
+
+message GetRandomPublicationsRequest {
+  int32 photoCount = 1;
+  int32 videoCount = 2;
+  int32 audioCount = 3;
+  repeated string tegs = 4;
+  string authorId = 5;
+}
+
+message GetSubscriptionsPublicationsRequest {
+  PostsRequest postsRequest = 1;
+  string userId = 2;
+  repeated string tegs = 3;
+  string authorId = 4;
+}
+

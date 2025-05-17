@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package comment;
+
+
+service CommentService {
+  rpc CreateComment (CreateCommentRequest) returns (CreateCommentResponse);
+  rpc PublicationComments (GetPublicationCommentsRequest) returns (PublicationCommentsResponse);
+}
+
+message CreateCommentRequest {
+  string userId = 1;
+  string publicationId = 2;
+  string comment = 3;
+}
+
+message GetPublicationCommentsRequest {
+  string publicationId = 1;
+}
+
+message Comment {
+  string id = 1;
+  string publicationId = 2;
+  string userId = 3;
+  string comment = 4;
+}
+
+message CreateCommentResponse {
+  string id = 1;
+  bool success = 2;
+}
+
+message PublicationCommentsResponse {
+  repeated Comment comments = 1;
+}
+

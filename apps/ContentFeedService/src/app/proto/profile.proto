@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package profile;
+
+service ProfileService {
+  rpc GetAvatar(ProfileRequest) returns (GetAvatarResponse);
+  rpc GetSubscriptions(ProfileRequest) returns (GetSubscriptionsResponse);
+}
+
+message ProfileRequest {
+  string userId = 1;
+}
+
+message GetAvatarResponse {
+  string avatarUrl = 1;
+}
+
+message GetSubscriptionsResponse {
+  repeated string subscriptions = 1;
+}

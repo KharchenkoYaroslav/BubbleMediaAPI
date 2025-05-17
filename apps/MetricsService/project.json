@@ -1,0 +1,45 @@
+{
+  "name": "MetricsService",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/MetricsService/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "webpack-cli build",
+        "args": ["node-env=production"],
+        "assets": [
+          {
+            "glob": "**/*.proto",
+            "input": "apps/MetricsService/src/app/proto",
+            "output": "proto"
+          }
+        ]
+      },
+      "configurations": {
+        "development": {
+          "args": ["node-env=development"]
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "dependsOn": ["build"],
+      "options": {
+        "buildTarget": "MetricsService:build",
+        "runBuildTargetDependencies": false
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "MetricsService:build:development"
+        },
+        "production": {
+          "buildTarget": "MetricsService:build:production"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package google;
+
+service GoogleDriveService {
+  rpc UploadAvatar (UploadAvatarRequest) returns (UploadAvatarResponse);
+}
+
+message UploadAvatarRequest {
+  string userId = 1;
+  bytes fileBuffer = 2;
+  string mimeType = 3;
+}
+
+message UploadAvatarResponse {
+  bool success = 1;
+  string publicUrl = 2;
+}

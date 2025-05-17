@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package auth;
+
+service AuthService {
+  rpc GetLogin (IdRequest) returns (GetLoginResponse);
+}
+
+message IdRequest {
+  string userId = 1;
+}
+
+message GetLoginResponse {
+  string login = 1;
+}

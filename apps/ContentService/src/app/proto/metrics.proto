@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package metrics;
+
+service MetricsService {
+  rpc AddPublication (PublicationRequest) returns (BoolResponse);
+  rpc RemovePublication (PublicationRequest) returns (BoolResponse);
+}
+
+message PublicationRequest {
+  string publicationId = 1;
+  string userId = 2;
+}
+
+message BoolResponse {
+  bool success = 1;
+}

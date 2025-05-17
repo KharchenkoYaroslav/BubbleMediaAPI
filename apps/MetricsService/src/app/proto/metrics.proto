@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+package metrics;
+
+service MetricsService {
+  rpc AddPublication (PublicationRequest) returns (BoolResponse);
+  rpc RemovePublication (PublicationRequest) returns (BoolResponse);
+  rpc GetTotalLikes (GetLikesRequest) returns (GetLikesResponse);
+  rpc AddLike (LikeRequest) returns (BoolResponse);
+  rpc RemoveLike (LikeRequest) returns (BoolResponse);
+  rpc GetLikedPublications (UserRequest) returns (GetLikedPublicationsResponse);
+  rpc GetRecentTopPosts (TopPostsRequest) returns (TopPostsResponse);
+}
+
+message PublicationRequest {
+  string publicationId = 1;
+  string userId = 2;
+}
+
+message GetLikesRequest {
+  string publicationId = 1;
+}
+
+message GetLikesResponse {
+  int32 total = 1;
+}
+
+message LikeRequest {
+  string publicationId = 1;
+  string userId = 2;
+}
+
+message BoolResponse {
+  bool success = 1;
+}
+
+message TopPostsRequest {}
+
+message TopPostsResponse {
+  repeated TopPost posts = 1;
+}
+
+message TopPost {
+  string publicationId = 1;
+  int32 score = 2;
+}
+
+message UserRequest{
+  string userId = 1;
+}
+
+message GetLikedPublicationsResponse{
+  repeated string publicationId = 1;
+}
+

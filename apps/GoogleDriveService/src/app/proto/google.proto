@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+package google;
+
+service GoogleDriveService {
+  rpc UploadAvatar (UploadAvatarRequest) returns (UploadAvatarResponse);
+  rpc UploadFile (UploadFileRequest) returns (UploadFileResponse);
+  rpc DeleteFile (DeleteFileRequest) returns (BoolResponse);
+}
+
+message BoolResponse {
+  bool success = 1;
+}
+
+message UploadAvatarRequest {
+  string userId = 1;
+  bytes fileBuffer = 2;
+  string mimeType = 3;
+}
+
+message UploadAvatarResponse {
+  bool success = 1;
+  string publicUrl = 2;
+}
+message UploadFileRequest {
+  string userId = 1;
+  bytes fileBuffer = 2;
+  string mimeType = 3;
+}
+
+message UploadFileResponse {
+  bool success = 1;
+  string publicUrl = 2;
+}
+message DeleteFileRequest {
+  string fileUrl = 1;
+}

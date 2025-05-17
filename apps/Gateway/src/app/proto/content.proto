@@ -1,0 +1,130 @@
+syntax = "proto3";
+
+package content;
+
+service ContentService {
+  rpc GetVideo (GetContentRequest) returns (VideoResponse);
+  rpc GetAudio (GetContentRequest) returns (AudioResponse);
+  rpc GetPhoto (GetContentRequest) returns (PhotoResponse);
+  rpc UploadVideo (UploadVideoRequest) returns (SuccessResponse);
+  rpc UploadAudio (UploadAudioRequest) returns (SuccessResponse);
+  rpc UploadPhoto (UploadPhotoRequest) returns (SuccessResponse);
+  rpc ChangeVideo (ChangeVideoRequest) returns (SuccessResponse);
+  rpc ChangeAudio (ChangeAudioRequest) returns (SuccessResponse);
+  rpc ChangePhoto (ChangePhotoRequest) returns (SuccessResponse);
+  rpc DeleteVideo (DeleteContentRequest) returns (SuccessResponse);
+  rpc DeleteAudio (DeleteContentRequest) returns (SuccessResponse);
+  rpc DeletePhoto (DeleteContentRequest) returns (SuccessResponse);
+}
+
+message GetContentRequest {
+  string publicationId = 1;
+}
+
+message VideoResponse {
+  string publicationId = 1;
+  string userId = 2;
+  string publicationName = 3;
+  string about = 4;
+  repeated string tegs = 5;
+  string videoUrl = 6;
+  string coverUrl = 7;
+  string createdAt = 8;
+}
+
+message AudioResponse {
+  string publicationId = 1;
+  string userId = 2;
+  string publicationName = 3;
+  string about = 4;
+  repeated string tegs = 5;
+  string audioUrl = 6;
+  string coverUrl = 7;
+  string createdAt = 8;
+}
+
+message PhotoResponse {
+  string publicationId = 1;
+  string userId = 2;
+  string publicationName = 3;
+  string about = 4;
+  repeated string tegs = 5;
+  string photoUrl = 6;
+  string createdAt = 7;
+}
+
+message UploadVideoRequest {
+  string userId = 1;
+  string publicationName = 2;
+  string about = 3;
+  repeated string tegs = 4;
+  bytes videoBuffer = 5;
+  bytes coverBuffer = 6;
+  string videoMimeType = 7;
+  string coverMimeType = 8;
+}
+
+message UploadAudioRequest {
+  string userId = 1;
+  string publicationName = 2;
+  string about = 3;
+  repeated string tegs = 4;
+  bytes audioBuffer = 5;
+  bytes coverBuffer = 6;
+  string audioMimeType = 7;
+  string coverMimeType = 8;
+}
+
+message UploadPhotoRequest {
+  string userId = 1;
+  string publicationName = 2;
+  string about = 3;
+  repeated string tegs = 4;
+  bytes photoBuffer = 5;
+  string photoMimeType = 6;
+}
+
+message ChangeVideoRequest {
+  string userId = 1;
+  string publicationId = 2;
+  optional string publicationName = 3;
+  optional string about = 4;
+  repeated string tegs = 5;
+  optional bytes videoBuffer = 6;
+  optional bytes coverBuffer = 7;
+  optional string videoMimeType = 8;
+  optional string coverMimeType = 9;
+}
+
+message ChangeAudioRequest {
+  string userId = 1;
+  string publicationId = 2;
+  optional string publicationName = 3;
+  optional string about = 4;
+  repeated string tegs = 5;
+  optional bytes audioBuffer = 6;
+  optional bytes coverBuffer = 7;
+  optional string audioMimeType = 8;
+  optional string coverMimeType = 9;
+}
+
+message ChangePhotoRequest {
+  string userId = 1;
+  string publicationId = 2;
+  optional string publicationName = 3;
+  optional string about = 4;
+  repeated string tegs = 5;
+  optional bytes photoBuffer = 6;
+  optional string photoMimeType = 7;
+}
+
+message DeleteContentRequest {
+  string publicationId = 1;
+  string userId = 2;
+}
+
+message SuccessResponse {
+  bool success = 1;
+}
+
+

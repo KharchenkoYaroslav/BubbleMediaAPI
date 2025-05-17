@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package profile;
+
+service ProfileService {
+  rpc GetProfile(ProfileRequest) returns (GetProfileResponse);
+  rpc GetAvatar(ProfileRequest) returns (GetAvatarResponse);
+  rpc UpdateAbout(UpdateAboutRequest) returns (BoolResponse);
+  rpc UpdateAvatar(UpdateAvatarRequest) returns (BoolResponse);
+  rpc AddSubscription(AddSubscriptionRequest) returns (BoolResponse);
+  rpc RemoveSubscription(RemoveSubscriptionRequest) returns (BoolResponse);
+}
+
+message ProfileRequest {
+  string userId = 1;
+}
+
+message BoolResponse {
+  bool success = 1;
+}
+
+message GetProfileResponse {
+  string about = 2;
+  string avatarUrl = 3;
+  repeated string subscriptions = 4;
+  int32 subscribersCount = 5;
+}
+
+message GetAvatarResponse {
+  string avatarUrl = 1;
+}
+
+message UpdateAboutRequest {
+  string userId = 1;
+  string about = 2;
+}
+
+message UpdateAvatarRequest {
+  string userId = 1;
+  bytes fileBuffer = 2;
+  string mimeType = 3;
+}
+
+message AddSubscriptionRequest {
+  string userId = 1;
+  string subscription = 2;
+}
+
+message RemoveSubscriptionRequest {
+  string userId = 1;
+  string subscriptionToRemove = 2;
+}

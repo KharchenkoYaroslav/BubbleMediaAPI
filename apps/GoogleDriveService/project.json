@@ -1,0 +1,45 @@
+{
+  "name": "GoogleDriveService",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/GoogleDriveService/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "webpack-cli build",
+        "args": ["node-env=production"],
+        "assets": [
+          {
+            "glob": "**/*.proto",
+            "input": "apps/GoogleDriveService/src/app/proto",
+            "output": "proto"
+          }
+        ]
+      },
+      "configurations": {
+        "development": {
+          "args": ["node-env=development"]
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "dependsOn": ["build"],
+      "options": {
+        "buildTarget": "GoogleDriveService:build",
+        "runBuildTargetDependencies": false
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "GoogleDriveService:build:development"
+        },
+        "production": {
+          "buildTarget": "GoogleDriveService:build:production"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "name": "ProfileService",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/ProfileService/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "webpack-cli build",
+        "args": ["node-env=production"],
+        "assets": [
+          {
+            "glob": "**/*.proto",
+            "input": "apps/ProfileService/src/app/proto",
+            "output": "proto"
+          }
+        ]
+      },
+      "configurations": {
+        "development": {
+          "args": ["node-env=development"]
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "dependsOn": ["build"],
+      "options": {
+        "buildTarget": "ProfileService:build",
+        "runBuildTargetDependencies": false
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "ProfileService:build:development"
+        },
+        "production": {
+          "buildTarget": "ProfileService:build:production"
+        }
+      }
+    }
+  }
+}
