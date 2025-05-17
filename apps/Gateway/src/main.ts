@@ -13,7 +13,7 @@ async function bootstrap() {
     preflightContinue: false,
   });
   const url = process.env.GATEWAY_URL || 'http://localhost:3000';
-  await app.listen(url.split(':').pop()); 
+  await app.listen(process.env.PORT || 3000);
   Logger.log(
     `🚀 Application is running on: ${url}/graphql`
   );
