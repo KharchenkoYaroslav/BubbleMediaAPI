@@ -5,7 +5,7 @@ services:
       service: nx-app-base
     command: npm run Gateway:dev:docker
     ports:
-      - "4000:4000"
+      - "3000:3000"
     depends_on:
       - auth-service
       - profile-service

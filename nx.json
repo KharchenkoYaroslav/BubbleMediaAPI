@@ -18,11 +18,6 @@
       }
     }
   },
-  "nxCloud": {
-    "accessToken": "",
-    "canTrackAnalytics": false,
-    "showUsageWarnings": false
-  },
   "plugins": [
     {
       "plugin": "@nx/webpack/plugin",
