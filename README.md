@@ -1,6 +1,6 @@
 # BubbleMediaAPI
 
-<img src="https://drive.google.com/uc?export=view&id=196kdd6BqxLvwM2F6Otda48qZsxRqyNdc" width="500" >
+<img src="https://drive.google.com/uc?export=view&id=196kdd6BqxLvwM2F6Otda48qZsxRqyNdc" width="50" >
 
 ✨ Вітаю у репозиторії API проекту фото/відео/аудіо хостингу ✨.
 
