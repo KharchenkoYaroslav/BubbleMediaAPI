@@ -14,7 +14,7 @@
     "default": {
       "runner": "@nx/workspace/tasks-runners/default",
       "options": {
-        "cacheableOperations": ["build", "lint", "test", "e2e"]
+        "use-nx-cloud": false
       }
     }
   },
