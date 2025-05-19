@@ -28,7 +28,7 @@ import { ContentFeedResolver } from './resolvers/content-feed.resolver';
         options: {
           package: 'auth',
           protoPath: join(__dirname, 'proto/auth.proto'),
-          url: `${process.env.AUTH_SERVICE_URL || '0.0.0.0:3001'}`,
+          url: `${process.env.AUTH_SERVICE_URL || '0.0.0.0:4010'}`,
         },
       },
     ]),
@@ -39,7 +39,7 @@ import { ContentFeedResolver } from './resolvers/content-feed.resolver';
         options: {
           package: 'profile',
           protoPath: join(__dirname, 'proto/profile.proto'),
-          url: `${process.env.PROFILE_SERVICE_URL || '0.0.0.0:3003'}`,
+          url: `${process.env.PROFILE_SERVICE_URL || '0.0.0.0:4030'}`,
         },
       },
     ]),
@@ -50,7 +50,7 @@ import { ContentFeedResolver } from './resolvers/content-feed.resolver';
         options: {
           package: 'content',
           protoPath: join(__dirname, 'proto/content.proto'),
-          url: `${process.env.CONTENT_SERVICE_URL || '0.0.0.0:3004'}`,
+          url: `${process.env.CONTENT_SERVICE_URL || '0.0.0.0:4040'}`,
         },
       },
     ]),
@@ -61,7 +61,7 @@ import { ContentFeedResolver } from './resolvers/content-feed.resolver';
         options: {
           package: 'metrics',
           protoPath: join(__dirname, 'proto/metrics.proto'),
-          url: `${process.env.METRICS_SERVICE_URL || '0.0.0.0:3005'}`,
+          url: `${process.env.METRICS_SERVICE_URL || '0.0.0.0:4050'}`,
         },
       },
     ]),
@@ -72,7 +72,7 @@ import { ContentFeedResolver } from './resolvers/content-feed.resolver';
         options: {
           package: 'comment',
           protoPath: join(__dirname, 'proto/comment.proto'),
-          url: `${process.env.COMMENT_SERVICE_URL || '0.0.0.0:3006'}`,
+          url: `${process.env.COMMENT_SERVICE_URL || '0.0.0.0:4060'}`,
         },
       },
     ]),
@@ -83,7 +83,7 @@ import { ContentFeedResolver } from './resolvers/content-feed.resolver';
         options: {
           package: 'contentfeed',
           protoPath: join(__dirname, 'proto/content-feed.proto'),
-          url: `${process.env.CONTENT_FEED_SERVICE_URL || '0.0.0.0:3007'}`,
+          url: `${process.env.CONTENT_FEED_SERVICE_URL || '0.0.0.0:4070'}`,
         },
       },
     ]),

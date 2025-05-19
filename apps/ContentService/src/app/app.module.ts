@@ -21,7 +21,7 @@ import { join } from 'path';
         options: {
           package: 'google',
           protoPath: join(__dirname, 'proto/google.proto'),
-          url: `${process.env.GOOGLE_DRIVE_SERVICE_URL || '0.0.0.0:3002'}`,
+          url: `${process.env.GOOGLE_DRIVE_SERVICE_URL || '0.0.0.0:4020'}`,
         },
       },
     ]),
@@ -32,7 +32,7 @@ import { join } from 'path';
         options: {
           package: 'metrics',
           protoPath: join(__dirname, 'proto/metrics.proto'),
-          url: `${process.env.METRICS_SERVICE_URL || '0.0.0.0:3005'}`,
+          url: `${process.env.METRICS_SERVICE_URL || '0.0.0.0:4050'}`,
         },
       },
     ]),

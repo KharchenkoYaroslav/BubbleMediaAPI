@@ -3,17 +3,9 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "AuthService:dev:docker": "nx serve AuthService ",
-    "Gateway:dev:docker": "nx serve Gateway ",
-    "GoogleDriveService:dev:docker": "nx serve GoogleDriveService ",
-    "ProfileService:dev:docker": "nx serve ProfileService ",
-    "ContentService:dev:docker": "nx serve ContentService ",
-    "MetricsService:dev:docker": "nx serve MetricsService ",
-    "CommentService:dev:docker": "nx serve CommentService ",
-    "ContentFeedService:dev:docker": "nx serve ContentFeedService ",
+    "build": "docker-compose build",
     "start": "docker-compose up -d",
-    "stop": "docker-compose stop",
-    "build": "docker-compose build"
+    "stop": "docker-compose stop"
   },
   "private": true,
   "dependencies": {

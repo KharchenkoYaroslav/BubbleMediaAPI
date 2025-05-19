@@ -21,7 +21,7 @@ import { join } from 'path';
         options: {
           package: 'profile',
           protoPath: join(__dirname, 'proto/profile.proto'),
-          url: `${process.env.PROFILE_SERVICE_URL || '0.0.0.0:3003'}`,
+          url: `${process.env.PROFILE_SERVICE_URL || '0.0.0.0:4030'}`,
         },
       },
     ]),
@@ -32,7 +32,7 @@ import { join } from 'path';
         options: {
           package: 'metrics',
           protoPath: join(__dirname, 'proto/metrics.proto'),
-          url: `${process.env.METRICS_SERVICE_URL || '0.0.0.0:3005'}`,
+          url: `${process.env.METRICS_SERVICE_URL || '0.0.0.0:4050'}`,
         },
       },
     ]),
@@ -43,7 +43,7 @@ import { join } from 'path';
         options: {
           package: 'auth',
           protoPath: join(__dirname, 'proto/auth.proto'),
-          url: `${process.env.AUTH_SERVICE_URL || '0.0.0.0:3001'}`,
+          url: `${process.env.AUTH_SERVICE_URL || '0.0.0.0:4010'}`,
         },
       },
     ]),

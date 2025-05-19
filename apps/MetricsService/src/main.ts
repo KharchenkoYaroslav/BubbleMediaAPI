@@ -24,13 +24,13 @@ async function bootstrap() {
     options: {
       package: 'metrics',
       protoPath: join(__dirname, 'proto/metrics.proto'),
-      url: `${process.env.METRICS_SERVICE_URL || '0.0.0.0:3005'}`,
+      url: `${process.env.METRICS_SERVICE_URL || '0.0.0.0:4050'}`,
     },
   });
 
   await app.startAllMicroservices();
   Logger.log(
-    `🚀 Metrics service running (gRPC on ${process.env.METRICS_SERVICE_URL || '0.0.0.0:3005'})`
+    `🚀 Metrics service running (gRPC on ${process.env.METRICS_SERVICE_URL || '0.0.0.0:4050'})`
   );
 
   app.get(AppService).cleanupOldDays();

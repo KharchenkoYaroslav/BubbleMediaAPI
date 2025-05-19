@@ -24,13 +24,13 @@ async function bootstrap() {
     options: {
       package: 'profile',
       protoPath: join(__dirname, 'proto/profile.proto'),
-      url: `${process.env.PROFILE_SERVICE_URL || '0.0.0.0:3003'}`,
+      url: `${process.env.PROFILE_SERVICE_URL || '0.0.0.0:4030'}`,
     },
   });
 
   await app.startAllMicroservices();
   Logger.log(
-    `🚀 Profile service running (gRPC on ${process.env.PROFILE_SERVICE_URL || '0.0.0.0:3003'})`
+    `🚀 Profile service running (gRPC on ${process.env.PROFILE_SERVICE_URL || '0.0.0.0:4030'})`
   );
 
   app.get(AppService).initGrpc();

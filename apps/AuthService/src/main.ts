@@ -10,14 +10,14 @@ async function bootstrap() {
     options: {
       package: 'auth',
       protoPath: join(__dirname, 'proto/auth.proto'),
-      url: `${process.env.AUTH_SERVICE_URL || '0.0.0.0:3001'}`,
+      url: `${process.env.AUTH_SERVICE_URL || '0.0.0.0:4010'}`,
     },
   });
 
    await app.listen();
 
   Logger.log(
-    `🚀 Application is running on: ${process.env.AUTH_SERVICE_URL || 'http://localhost:3001'}`
+    `🚀 Application is running on: ${process.env.AUTH_SERVICE_URL || 'http://localhost:4010'}`
   );
 }
 

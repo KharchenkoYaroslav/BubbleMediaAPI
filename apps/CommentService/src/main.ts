@@ -23,13 +23,13 @@ async function bootstrap() {
     options: {
       package: 'comment',
       protoPath: join(__dirname, 'proto/comment.proto'),
-      url: `${process.env.COMMENT_SERVICE_URL || '0.0.0.0:3006'}`,
+      url: `${process.env.COMMENT_SERVICE_URL || '0.0.0.0:4060'}`,
     },
   });
 
   await app.startAllMicroservices();
   Logger.log(
-    `🚀 Comment service running (gRPC on ${process.env.COMMENT_SERVICE_URL || '0.0.0.0:3006'})`
+    `🚀 Comment service running (gRPC on ${process.env.COMMENT_SERVICE_URL || '0.0.0.0:4060'})`
   );
 }
 
