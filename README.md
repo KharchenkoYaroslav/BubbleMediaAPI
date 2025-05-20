@@ -364,7 +364,12 @@ input GetPublicationCommentsInput {
 
 Для запуску виконуйте `npm run start`
 
+Після запуску сервер буде доступний за: `http://localhost:4000/graphql`, де 4000 - порт Gateway
+
+Вебсокети будуть доступні за: `ws://localhost:4000/graphql`
+
 Для зупинки `npm run stop`
+
 
 ### Частина 2 - Для співрозробників
 
