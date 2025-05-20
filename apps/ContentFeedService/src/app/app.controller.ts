@@ -7,6 +7,19 @@ import { PostsRequestDto } from './dto/posts.request.dto';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
+  @GrpcMethod('ContentFeedService', 'GetUserPublications')
+  async getUserPublications(
+    request: {postsRequest: PostsRequestDto, userId: string, tegs?: string[]},
+  ){
+
+    const publications = await this.appService.getUserPublications(
+      request.postsRequest,
+      request.userId,
+      request.tegs,
+    );
+    return {publications};
+  }
+
   @GrpcMethod('ContentFeedService', 'GetRecentTopPosts')
   async getRecentTopPosts(
     request: {postsRequest: PostsRequestDto, tegs?: string[], authorId?: string},
@@ -51,7 +64,6 @@ export class AppController {
   async getSubscriptionsPublications(
     request: {postsRequest: PostsRequestDto, userId: string, tegs?: string[], authorId?: string},
   ){
-    console.log();
 
     const publications = await this.appService.getSubscriptionsPublications(
       request.postsRequest,

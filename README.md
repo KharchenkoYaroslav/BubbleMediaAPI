@@ -157,6 +157,9 @@ type Query {
   getAudio(getContentByIdInput: String!): AudioResponse!
   getPhoto(getContentByIdInput: String!): PhotoResponse!
   getTotalLikes(data: GetLikesRequestDto!): GetLikesResponseDto!
+  GetUserPublications(
+    input: GetUserPublicationsInput!
+  ): PublicationsResponseDto!
   GetRecentTopPosts(input: GetRecentTopPostsInput!): PublicationsResponseDto!
   GetLikedPublications(
     input: GetLikedPublicationsInput!
@@ -177,15 +180,21 @@ input GetLikesRequestDto {
   publicationId: String!
 }
 
-input GetRecentTopPostsInput {
+input GetUserPublicationsInput {
+  userId: String!
   postsRequest: PostsRequestDto!
   tegs: [String!]
-  author: String
 }
 
 input PostsRequestDto {
   start: Int!
   end: Int!
+}
+
+input GetRecentTopPostsInput {
+  postsRequest: PostsRequestDto!
+  tegs: [String!]
+  author: String
 }
 
 input GetLikedPublicationsInput {

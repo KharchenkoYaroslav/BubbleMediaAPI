@@ -3,10 +3,17 @@ syntax = "proto3";
 package contentfeed;
 
 service ContentFeedService {
+  rpc GetUserPublications (GetUserPublicationsRequest) returns (PublicationsResponse);
   rpc GetRecentTopPosts (GetRecentTopPostsRequest) returns (PublicationsResponse);
   rpc GetLikedPublications (GetLikedPublicationsRequest) returns (PublicationsResponse);
   rpc GetRandomPublications (GetRandomPublicationsRequest) returns (PublicationsResponse);
   rpc GetSubscriptionsPublications (GetSubscriptionsPublicationsRequest) returns (PublicationsResponse);
+}
+
+message GetUserPublicationsRequest {
+  PostsRequest postsRequest = 1;
+  string userId = 2;
+  repeated string tegs = 3;
 }
 
 message PostsRequest {

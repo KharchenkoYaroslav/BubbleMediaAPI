@@ -21,7 +21,7 @@ interface ProfileServiceGrpc {
 }
 
 interface AuthServiceGrpc {
-  getLogin(data: {userId: string}): Observable<GetLoginResponse>;
+  getLogin(data: { userId: string }): Observable<GetLoginResponse>;
 }
 
 interface MetricsServiceGrpc {
@@ -59,6 +59,68 @@ export class AppService {
       this.metricsClient.getService<MetricsServiceGrpc>('MetricsService');
     this.authService =
       this.authClient.getService<AuthServiceGrpc>('AuthService');
+  }
+
+  async getUserPublications(
+    postsRequest: PostsRequestDto,
+    userId: string,
+    tegs?: string[]
+  ): Promise<PublicationDto[]> {
+    const [photoMeta, videoMeta, audioMeta] = await Promise.all([
+      this.photoRepository.find({
+        where: { userId },
+        select: ['publicationId', 'tegs', 'createdAt', 'userId'],
+      }),
+      this.videoRepository.find({
+        where: { userId },
+        select: ['publicationId', 'tegs', 'createdAt', 'userId'],
+      }),
+      this.audioRepository.find({
+        where: { userId },
+        select: ['publicationId', 'tegs', 'createdAt', 'userId'],
+      }),
+    ]);
+
+    const allMeta = [
+      ...photoMeta.map((p) => ({
+        publicationId: p.publicationId,
+        tegs: p.tegs,
+        createdAt: p.createdAt,
+        userId: p.userId,
+        type: 'photo' as const,
+      })),
+      ...videoMeta.map((v) => ({
+        publicationId: v.publicationId,
+        tegs: v.tegs,
+        createdAt: v.createdAt,
+        userId: v.userId,
+        type: 'video' as const,
+      })),
+      ...audioMeta.map((a) => ({
+        publicationId: a.publicationId,
+        tegs: a.tegs,
+        createdAt: a.createdAt,
+        userId: a.userId,
+        type: 'audio' as const,
+      })),
+    ];
+
+    const filteredMeta = this.filterPublications(allMeta, tegs, userId)
+      .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
+      .slice(postsRequest.start, postsRequest.end);
+
+    const publications = await Promise.all(
+      filteredMeta.map(async ({ publicationId, type }) => {
+        const [publication] = await this.fetchPublicationsByIds(
+          [publicationId],
+          type
+        );
+        if (!publication) return null;
+        return this.enrichPublication(publication, type);
+      })
+    );
+
+    return publications.filter(Boolean) as PublicationDto[];
   }
 
   async getRecentTopPosts(
@@ -325,7 +387,6 @@ export class AppService {
     publication: Photo | Video | Audio,
     type: 'photo' | 'video' | 'audio'
   ): Promise<PublicationDto> {
-
     const [loginResp, avatarResp] = await Promise.all([
       firstValueFrom(this.authService.getLogin({ userId: publication.userId })),
       firstValueFrom(

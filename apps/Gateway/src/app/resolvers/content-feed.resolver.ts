@@ -8,9 +8,13 @@ import { GetRecentTopPostsInput } from '../dto/content-feed/get-recent-top-posts
 import { GetLikedPublicationsInput } from '../dto/content-feed/get-liked-publications.input';
 import { GetRandomPublicationsInput } from '../dto/content-feed/get-random-publications.input';
 import { GetSubscriptionsPublicationsInput } from '../dto/content-feed/get-subscriptions-publications.input';
+import { GetUserPublicationsInput } from '../dto/content-feed/get-user-publications.input';
 import { GetIdResponse } from '../dto/auth/get-id.response';
 
 interface ContentFeedServiceGrpc {
+  GetUserPublications(
+    data: GetUserPublicationsInput & { userId: string }
+  ): Observable<PublicationsResponseDto>;
   GetRecentTopPosts(
     data: GetRecentTopPostsInput
   ): Observable<PublicationsResponseDto>;
@@ -42,7 +46,17 @@ export class ContentFeedResolver {
   onModuleInit() {
     this.contentFeedService =
       this.client.getService<ContentFeedServiceGrpc>('ContentFeedService');
-    this.authService = this.authClient.getService<AuthServiceGrpc>('AuthService');
+    this.authService =
+      this.authClient.getService<AuthServiceGrpc>('AuthService');
+  }
+
+  @Query(() => PublicationsResponseDto)
+  async GetUserPublications(
+    @Args('input') input: GetUserPublicationsInput
+  ): Promise<PublicationsResponseDto> {
+    return firstValueFrom(
+      this.contentFeedService.GetUserPublications(input)
+    );
   }
 
   @Query(() => PublicationsResponseDto)
@@ -51,9 +65,13 @@ export class ContentFeedResolver {
   ): Promise<PublicationsResponseDto> {
     if (input.author) {
       const { author, ...rest } = input;
-      const authorIdResponse = await firstValueFrom(this.authService.getId({ login: author }));
+      const authorIdResponse = await firstValueFrom(
+        this.authService.getId({ login: author })
+      );
       const serviceInput = { ...rest, authorId: authorIdResponse.userId };
-      return firstValueFrom(this.contentFeedService.GetRecentTopPosts(serviceInput));
+      return firstValueFrom(
+        this.contentFeedService.GetRecentTopPosts(serviceInput)
+      );
     }
     return firstValueFrom(this.contentFeedService.GetRecentTopPosts(input));
   }
@@ -68,8 +86,14 @@ export class ContentFeedResolver {
 
     if (input.author) {
       const { author, ...rest } = input;
-      const authorIdResponse = await firstValueFrom(this.authService.getId({ login: author }));
-      const serviceInput = { ...rest, userId, authorId: authorIdResponse.userId };
+      const authorIdResponse = await firstValueFrom(
+        this.authService.getId({ login: author })
+      );
+      const serviceInput = {
+        ...rest,
+        userId,
+        authorId: authorIdResponse.userId,
+      };
       return firstValueFrom(
         this.contentFeedService.GetLikedPublications(serviceInput)
       );
@@ -85,9 +109,13 @@ export class ContentFeedResolver {
   ): Promise<PublicationsResponseDto> {
     if (input.author) {
       const { author, ...rest } = input;
-      const authorIdResponse = await firstValueFrom(this.authService.getId({ login: author }));
+      const authorIdResponse = await firstValueFrom(
+        this.authService.getId({ login: author })
+      );
       const serviceInput = { ...rest, authorId: authorIdResponse.userId };
-      return firstValueFrom(this.contentFeedService.GetRandomPublications(serviceInput));
+      return firstValueFrom(
+        this.contentFeedService.GetRandomPublications(serviceInput)
+      );
     }
     return firstValueFrom(this.contentFeedService.GetRandomPublications(input));
   }
@@ -101,8 +129,14 @@ export class ContentFeedResolver {
     const userId = context.req.user.sub;
     if (input.author) {
       const { author, ...rest } = input;
-      const authorIdResponse = await firstValueFrom(this.authService.getId({ login: author }));
-      const serviceInput = { ...rest, userId, authorId: authorIdResponse.userId };
+      const authorIdResponse = await firstValueFrom(
+        this.authService.getId({ login: author })
+      );
+      const serviceInput = {
+        ...rest,
+        userId,
+        authorId: authorIdResponse.userId,
+      };
       return firstValueFrom(
         this.contentFeedService.GetSubscriptionsPublications(serviceInput)
       );
