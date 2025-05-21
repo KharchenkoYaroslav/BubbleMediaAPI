@@ -1,0 +1,10 @@
+{
+  "auth_login": "test",
+  "auth_password": "123",
+  "login": "user",
+  "password": "12345",
+  "secondUserId": "4453119e-5e53-42a3-adb1-24c856e311e2",
+  "videoId": "8a9625e3-a782-4935-adae-7d60a27ede6c",
+  "audioId":"bb86c791-73fb-4a75-96ad-d391fc6c09b4",
+  "photoId":"53fb669d-62d1-4fe3-8ed6-108da015734d"
+}

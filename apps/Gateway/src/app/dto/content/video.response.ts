@@ -24,5 +24,5 @@ export class VideoResponse {
   coverUrl: string;
 
   @Field()
-  createdAt: Date;
+  createdAt: string;
 }

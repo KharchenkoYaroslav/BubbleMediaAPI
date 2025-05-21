@@ -21,5 +21,5 @@ export class PhotoResponse {
   photoUrl: string;
 
   @Field()
-  createdAt: Date;
+  createdAt: string;
 }

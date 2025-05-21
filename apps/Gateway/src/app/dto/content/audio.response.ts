@@ -24,5 +24,5 @@ export class AudioResponse {
   coverUrl: string;
 
   @Field()
-  createdAt: Date;
+  createdAt: string;
 }
