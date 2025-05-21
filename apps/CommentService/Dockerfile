@@ -2,16 +2,6 @@ FROM node:20.17.0-alpine
 
 WORKDIR /app
 
-COPY nx.json .
-COPY tsconfig.base.json .
-COPY package.json .
-COPY package-lock.json .
-COPY eslint.config.mjs .
-
-COPY apps/CommentService /app/apps/CommentService
-
-RUN npm install
-
-RUN npx nx build CommentService  --no-cache
+COPY dist/apps/CommentService /app/dist/apps/CommentService
 
 CMD ["sh", "-c", "node dist/apps/CommentService/main.js"]

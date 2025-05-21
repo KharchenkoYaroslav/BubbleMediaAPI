@@ -360,16 +360,21 @@ input GetPublicationCommentsInput {
 
 виконати `Частину 2`
 
+Скачайте необхідні залежності `npm install`
+
 Один раз виконати build `npm run build`
 
+Один раз виконати install-deps `npm run install-deps`
+
+Один раз виконати build-docker `npm run build-docker`
+
 Для запуску виконуйте `npm run start`
+
+Для зупинки `npm run stop`
 
 Після запуску сервер буде доступний за: `http://localhost:4000/graphql`, де 4000 - порт Gateway
 
 Вебсокети будуть доступні за: `ws://localhost:4000/graphql`
-
-Для зупинки `npm run stop`
-
 
 ### Частина 2 - Для співрозробників
 

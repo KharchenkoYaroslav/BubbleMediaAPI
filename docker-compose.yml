@@ -1,4 +1,13 @@
 services:
+  node-modules-installer:
+    build:
+      context: .
+      dockerfile: Dockerfile.node-modules-installer
+    volumes:
+      - node_modules_cache:/app/node_modules
+    command: ["npm", "install"]
+    profiles: ["install-deps"]
+
   gateway-service:
     build:
       context: .
@@ -15,6 +24,9 @@ services:
       - comment-service
       - content-feed-service
       - rabbitmq
+      
+    volumes:
+      - node_modules_cache:/app/node_modules
     environment:
       - AUTH_SERVICE_URL=auth-service:4010
       - GOOGLE_DRIVE_SERVICE_URL=google-drive-service:4020
@@ -33,6 +45,9 @@ services:
     env_file: .env
     depends_on:
       - rabbitmq
+
+    volumes:
+      - node_modules_cache:/app/node_modules
     environment:
       - AUTH_SERVICE_URL=auth-service:4010
       - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672
@@ -45,6 +60,9 @@ services:
     env_file: .env
     depends_on:
       - rabbitmq
+
+    volumes:
+      - node_modules_cache:/app/node_modules
     environment:
       - GOOGLE_DRIVE_SERVICE_URL=google-drive-service:4020
       - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672
@@ -58,6 +76,9 @@ services:
     depends_on:
       - google-drive-service
       - rabbitmq
+
+    volumes:
+      - node_modules_cache:/app/node_modules
     environment:
       - PROFILE_SERVICE_URL=profile-service:4030
       - GOOGLE_DRIVE_SERVICE_URL=google-drive-service:4020
@@ -73,6 +94,9 @@ services:
       - google-drive-service
       - metrics-service
       - rabbitmq
+
+    volumes:
+      - node_modules_cache:/app/node_modules
     environment:
       - CONTENT_SERVICE_URL=content-service:4040
       - GOOGLE_DRIVE_SERVICE_URL=google-drive-service:4020
@@ -87,6 +111,9 @@ services:
     env_file: .env
     depends_on:
       - rabbitmq
+
+    volumes:
+      - node_modules_cache:/app/node_modules
     environment:
       - METRICS_SERVICE_URL=metrics-service:4050
       - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672
@@ -99,6 +126,9 @@ services:
     env_file: .env
     depends_on:
       - rabbitmq
+
+    volumes:
+      - node_modules_cache:/app/node_modules
     environment:
       - COMMENT_SERVICE_URL=comment-service:4060
       - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672
@@ -113,6 +143,9 @@ services:
       - auth-service
       - profile-service
       - metrics-service
+
+    volumes:
+      - node_modules_cache:/app/node_modules
     environment:
       - CONTENT_FEED_SERVICE_URL=content-feed-service:4070
       - AUTH_SERVICE_URL=auth-service:4010
@@ -139,4 +172,4 @@ services:
 
 volumes:
   rabbitmq_data:
-
+  node_modules_cache:

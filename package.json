@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "build": "docker-compose build",
+    "install-deps": "docker compose --profile install-deps up node-modules-installer",
+    "build": "npx nx run-many --target=build",
+    "build-docker": "docker-compose build",
     "start": "docker-compose up -d",
     "stop": "docker-compose stop",
     "test": "npx nx e2e Gateway"
