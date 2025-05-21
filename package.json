@@ -5,7 +5,8 @@
   "scripts": {
     "build": "docker-compose build",
     "start": "docker-compose up -d",
-    "stop": "docker-compose stop"
+    "stop": "docker-compose stop",
+    "test": "npx nx e2e Gateway"
   },
   "private": true,
   "dependencies": {

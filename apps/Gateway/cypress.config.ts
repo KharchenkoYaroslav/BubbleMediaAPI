@@ -10,6 +10,6 @@ export default defineConfig({
     ...nxE2EPreset(__filename, {
       cypressDir: 'cypress',
     }),
-    baseUrl: 'http://localhost:4000/graphql',
+    baseUrl: `http://localhost:${process.env.PORT}/graphql`,
   },
 });
