@@ -48,9 +48,6 @@ export class AppService {
     const comments = await this.commentRepository.find({
       where: { publicationId }
     });
-    if (!comments || comments.length === 0) {
-      throw new NotFoundException(`No comments found for publication with ID ${publicationId}`);
-    }
     return { comments };
   }
 

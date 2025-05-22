@@ -77,10 +77,10 @@ export class CommentResolver implements OnModuleInit {
 
     for (const comment of initialComments) {
       yield { subscribeToPublicationComments: comment };
-
-      yield* pubSub.asyncIterableIterator(
-        `comments:${data.publicationId}`
-      ) as AsyncIterableIterator<{ subscribeToPublicationComments: Comment }>;
     }
+
+    yield* pubSub.asyncIterableIterator(
+      `comments:${data.publicationId}`
+    ) as AsyncIterableIterator<{ subscribeToPublicationComments: Comment }>;
   }
 }
