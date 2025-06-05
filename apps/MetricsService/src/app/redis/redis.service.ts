@@ -136,18 +136,28 @@ export class RedisService {
   }
 
   async cleanupOldDays(): Promise<void> {
-    const cutoff = new Date();
-    cutoff.setDate(cutoff.getDate() - 7);
-    const cutoffScore = parseInt(
-      cutoff.toISOString().slice(0, 10).replace(/-/g, '')
-    );
+  const cutoff = new Date();
+  cutoff.setDate(cutoff.getDate() - 7);
+  const cutoffStr = cutoff.toISOString().slice(0, 10).replace(/-/g, '');
 
-    const recentKeys = await this.redisClient.keys('post:*:likes:recent');
+  const recentKeys = await this.redisClient.keys('post:*:likes:recent');
 
-    const multi = this.redisClient.multi();
-    for (const recentKey of recentKeys) {
-      multi.zRemRangeByScore(recentKey, cutoffScore, '+inf');
+  for (const recentKey of recentKeys) {
+    const entries = await this.redisClient.zRangeWithScores(recentKey, 0, -1);
+    const toRemove: string[] = [];
+
+    for (const entry of entries) {
+      const dateStr = entry.value;
+      if (parseInt(dateStr) < parseInt(cutoffStr)) {
+        toRemove.push(dateStr);
+      }
     }
-    await multi.exec();
+
+    if (toRemove.length > 0) {
+      await this.redisClient.zRem(recentKey, toRemove);
+      console.log(`Removed ${toRemove.length} old entries from ${recentKey}`);
+    }
   }
+}
+
 }
